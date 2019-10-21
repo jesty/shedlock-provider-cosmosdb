@@ -49,7 +49,7 @@ Before build this project you need to checkout ShedLock and install _shedlock-te
     > cd shedlock-test-support
     > mvn clean install 
 
-After you can build this project using
+After you can build this project using:
 
     > mvn package
 
@@ -58,6 +58,9 @@ There is an [integration test](https://github.com/jesty/ShedLock/tree/master/pro
     > mvn verify
 
 This test need a CosmosDB instance on Azure, or the [CosmosDB local emulator](https://docs.microsoft.com/azure/cosmos-db/local-emulator).
-
 The instance parameters must be set in [config.properties](https://github.com/jesty/ShedLock/tree/master/providers/cosmosdb/shedlock-provider-cosmosdb/src/test/resources/config.properties).
+
+If you would like to build or install in your local repository the project without running integration test, you can run:
+    
+    > mvn install -DskipITs
 
