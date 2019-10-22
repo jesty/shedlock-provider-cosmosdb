@@ -1,17 +1,18 @@
 # ShedLock Provider for CosmosDB
 
-[ShedLock](https://github.com/lukas-krecan/ShedLock) is a Java library helpful to be sure that a scheduled task runs only once at the same time in a distributed environment.
+[ShedLock](https://github.com/lukas-krecan/ShedLock) is a Java library that can be used to be sure that a scheduled task runs only once at the same time in a distributed environment.
 
 The lock may be implemented using various providers like Redis, MongoDB, Hazelcast and so on.
 
-Using the provider in this project, you can use CosmosDB.
+Using the provider in this project, you can rely on Cosmos DB.
 
-To use it, you need only to import the dependency in your pom.xml:
+To use it, you just need to:
 
+- import the dependency in your pom.xml:
 ```xml
 <dependency>
-	<groupId>net.javacrumbs.shedlock</groupId>
-	<artifactId>shedlock-core</artifactId>
+    <groupId>net.javacrumbs.shedlock</groupId>
+    <artifactId>shedlock-core</artifactId>
     <version>3.0.0</version>
 </dependency>
 
@@ -22,7 +23,7 @@ To use it, you need only to import the dependency in your pom.xml:
 </dependency>
 ```
 
-and then instantiate the right provider, for example using Spring::
+- instantiate the right provider, e.g. using Spring with annotation-based configuration:
 
 ```java
 import com.github.jesty.shedlock.provider.cosmosdb.CosmosDBLockProvider;
@@ -31,25 +32,23 @@ import com.github.jesty.shedlock.provider.cosmosdb.CosmosDBLockProvider;
 
 @Bean
 public LockProvider lockProvider(CosmosContainer container) {
-    return new MongoLockProvider(container, "lockGroup"); //lockGroup is the partition key
+    return new CosmosDBLockProvider(container, "lockGroup"); //lockGroup is the partition key
 }
 ```
 
-For more information about ShedLock refer to [original documentation](https://github.com/lukas-krecan/ShedLock).
+For more information about ShedLock refer to the [original documentation](https://github.com/lukas-krecan/ShedLock).
 
-
-The lock rely on a collection on your CosmosDB instance. In order to perform the lock you have to create a stored procedure ([checkLockAndAcquire.js](https://github.com/jesty/ShedLock/tree/master/providers/cosmosdb/shedlock-provider-cosmosdb/storedprocedures/checkLockAndAcquire.js)) in your CosmosDB instance.
-
+The lock relies on a Cosmos DB's collection. In order to perform the lock you have to create a stored procedure ([checkLockAndAcquire.js](https://github.com/jesty/ShedLock/tree/master/providers/cosmosdb/shedlock-provider-cosmosdb/storedprocedures/checkLockAndAcquire.js)) in your Cosmos DB instance.
 
 ## Build from source
 
-Before build this project you need to checkout ShedLock and install _shedlock-test-support_ in your local Maven repository:
+Before building this project you need to checkout ShedLock and install _shedlock-test-support_ in your local Maven repository:
 
     > git clone https://github.com/lukas-krecan/ShedLock.git
     > cd shedlock-test-support
     > mvn clean install 
 
-After you can build this project using:
+Finally, you can build this project by running:
 
     > mvn package
 
@@ -57,10 +56,10 @@ There is an [integration test](https://github.com/jesty/ShedLock/tree/master/pro
 
     > mvn verify
 
-This test need a CosmosDB instance on Azure, or the [CosmosDB local emulator](https://docs.microsoft.com/azure/cosmos-db/local-emulator).
+This test need a Cosmos DB instance on Azure, or a [Cosmos DB local emulator](https://docs.microsoft.com/azure/cosmos-db/local-emulator) instance running.
 The instance parameters must be set in [config.properties](https://github.com/jesty/ShedLock/tree/master/providers/cosmosdb/shedlock-provider-cosmosdb/src/test/resources/config.properties).
 
-If you would like to build or install in your local repository the project without running integration test, you can run:
+If you would like to build or install the project in your local repository without running integration tests, you can run:
     
     > mvn install -DskipITs
 
